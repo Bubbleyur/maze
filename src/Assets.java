@@ -6,23 +6,23 @@ public class Assets {
 
     public static BufferedImage floor;
     public static BufferedImage player;
-    public static BufferedImage[] wallTiles = new BufferedImage[16];
+    public static BufferedImage[] wallTiles = new BufferedImage[4];
 
     public static void load() {
         System.out.println("Loading assets from: " + new File("assets").getAbsolutePath());
         try {
 
-            for(int i = 0; i < 16; i++) {
+            for(int i = 0; i < 4; i++) {
 
                 wallTiles[i] = ImageIO.read(
-                    new File("assets/walls/" + i + ".png")
+                    new File("assets/object/wall/" + i + ".png")
                 );
 
             }
 
             floor = ImageIO.read(new File("assets/pathtile/flooroutside.png"));
 
-            player = ImageIO.read(new File("assets/object/wall/tile_0177.png"));
+            player = ImageIO.read(new File("assets/entity/tile_0008.png"));
 
             System.out.println("Assets Loaded successfully!");
 

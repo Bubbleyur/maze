@@ -64,20 +64,25 @@ public class GameData {
                 int drawX = x * TILE_SIZE;
                 int drawY = y * TILE_SIZE;
 
-                if(map[y][x] == 1) {
+                // Always draw the path tile first
+                g.drawImage(
+                    Assets.floor,
+                    drawX,
+                    drawY,
+                    TILE_SIZE,
+                    TILE_SIZE,
+                    null
+                );
 
-                    g.drawImage(
-                        Assets.floor,
-                        drawX,
-                        drawY,
-                        TILE_SIZE,
-                        TILE_SIZE,
-                        null
-                    );
-                }
-                else {
+                // If it's a wall, draw the wall on top
+                if(map[y][x] == WALL) {
 
-                    int type = getWallType(ROWS, COLS);
+                    int type = getWallType(y, x);
+
+                    // Ensure type doesn't exceed array bounds
+                    if (type >= Assets.wallTiles.length) {
+                        type = Assets.wallTiles.length - 1;
+                    }
 
                     g.drawImage(
                         Assets.wallTiles[type],
@@ -96,25 +101,25 @@ public class GameData {
         if (r < 0 || c < 0 || r >= map.length || c >= map[0].length)
             return false;
 
-        return map[r][c] == 1;
+        return map[r][c] == WALL;
     }
 
     static int getWallType(int row, int col) {
-        int type = 0;
+        boolean up = isWall(row - 1, col);
+        boolean right = isWall(row, col + 1);
+        boolean down = isWall(row + 1, col);
+        boolean left = isWall(row, col - 1);
 
-        // atas
-        if (isWall(row - 1, col)) type += 1;
+        // Priority 1: Horizontal links (middle first, then ends)
+        if (left && right) return 1;
+        if (right) return 0;
+        if (left) return 2;
 
-        // kanan
-        if (isWall(row, col + 1)) type += 2;
+        // Priority 2: Vertical links
+        if (up || down) return 3;
 
-        // bawah
-        if (isWall(row + 1, col)) type += 4;
-
-        // kiri
-        if (isWall(row, col - 1)) type += 8;
-
-        return type;
+        // Default: Vertical pole for isolated walls
+        return 3;
     }
 
     public static void drawPlayer(Graphics g) {
@@ -130,7 +135,9 @@ public class GameData {
     }
 
     public GameData(int[][] map) {
-        this.map = map;
+        GameData.map = map;
+        GameData.ROWS = map.length;
+        GameData.COLS = map[0].length;
     }
     
 }

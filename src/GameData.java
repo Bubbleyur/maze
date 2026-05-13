@@ -77,8 +77,10 @@ public class GameData {
                 }
                 else {
 
+                    int type = getWallType(ROWS, COLS);
+
                     g.drawImage(
-                        Assets.wall,
+                        Assets.wallTiles[type],
                         drawX,
                         drawY,
                         TILE_SIZE,
@@ -88,6 +90,31 @@ public class GameData {
                 }
             }
         }
+    }
+
+    static boolean isWall(int r, int c) {
+        if (r < 0 || c < 0 || r >= map.length || c >= map[0].length)
+            return false;
+
+        return map[r][c] == 1;
+    }
+
+    static int getWallType(int row, int col) {
+        int type = 0;
+
+        // atas
+        if (isWall(row - 1, col)) type += 1;
+
+        // kanan
+        if (isWall(row, col + 1)) type += 2;
+
+        // bawah
+        if (isWall(row + 1, col)) type += 4;
+
+        // kiri
+        if (isWall(row, col - 1)) type += 8;
+
+        return type;
     }
 
     public static void drawPlayer(Graphics g) {

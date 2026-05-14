@@ -67,7 +67,7 @@ public class GameData {
                 if(map[y][x] == 1) {
 
                     g.drawImage(
-                        Assets.floor,
+                        Assets.floorSprite,
                         drawX,
                         drawY,
                         TILE_SIZE,
@@ -78,7 +78,7 @@ public class GameData {
                 else {
 
                     g.drawImage(
-                        Assets.wall,
+                        Assets.wallSprite,
                         drawX,
                         drawY,
                         TILE_SIZE,
@@ -93,7 +93,7 @@ public class GameData {
     public static void drawPlayer(Graphics g) {
 
         g.drawImage(
-            Assets.player,
+            Assets.playerSprite,
             playerX * TILE_SIZE,
             playerY * TILE_SIZE,
             TILE_SIZE,
@@ -102,8 +102,49 @@ public class GameData {
         );
     }
 
-    public GameData(int[][] map) {
-        this.map = map;
+    public static boolean movePlayer(int dx, int dy) {
+        int newX = playerX + dx;
+        int newY = playerY + dy;
+
+        if (!canMove(newX, newY)) {
+            return false;
+        }
+
+        // hapus player dari posisi lama
+        map[playerY][playerX] = FLOOR;
+
+        // update posisi
+        playerX = newX;
+        playerY = newY;
+
+        // simpan player ke map baru
+        map[playerY][playerX] = PLAYER;
+
+        return true;
     }
+
+    public GameData(int[][] map) {
+    this.map = map;
+
+    ROWS = map.length;
+    COLS = map[0].length;
+    resetVisited();
+
+
+    // cari posisi player
+    for (int y = 0; y < ROWS; y++) {
+        for (int x = 0; x < COLS; x++) {
+            if (map[y][x] == PLAYER) {
+                playerX = x;
+                playerY = y;
+            }
+
+            if (map[y][x] == EXIT) {
+                targetX = x;
+                targetY = y;
+            }
+        }
+    }
+}
     
 }

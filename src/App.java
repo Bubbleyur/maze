@@ -51,5 +51,7 @@ public class App extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setVisible(true);
+        
+        // tes
     }
 }

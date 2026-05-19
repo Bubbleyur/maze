@@ -1,9 +1,10 @@
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameData {
     // assets
-
+    public static ArrayList<Huruf> huruf = new ArrayList<>();
 
     // space
     public static final int TILE_SIZE = 32;
@@ -97,6 +98,18 @@ public class GameData {
         }
     }
 
+    public static void drawHuruf(Graphics g){
+        int offsetX = 10;
+        int offsetY = 25;
+        for (Huruf i : huruf) {
+            if(!i.sudahDiambil){
+                g.setColor(Color.BLACK);
+                g.setFont(new Font("Arial", Font.BOLD, 20));
+                g.drawString(i.kata, (i.posisiX * TILE_SIZE) + offsetX, (i.posisiY * TILE_SIZE) + offsetY);
+            }
+        }
+    }
+
     static boolean isWall(int r, int c) {
         if (r < 0 || c < 0 || r >= map.length || c >= map[0].length)
             return false;
@@ -134,10 +147,16 @@ public class GameData {
         );
     }
 
+    public static void tempatHuruf(){
+        huruf.clear();
+        huruf.add(new Huruf("O", 3, 3));
+    }
+
     public GameData(int[][] map) {
         GameData.map = map;
         GameData.ROWS = map.length;
         GameData.COLS = map[0].length;
+        tempatHuruf();
     }
     
 }

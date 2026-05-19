@@ -21,6 +21,7 @@ public class App extends JPanel{
 
         GameData.drawMap(g);
         GameData.drawPlayer(g);
+        GameData.drawHuruf(g);
         // tampilan game selesai
         if(gameSelesai){
             g.setColor(Color.BLACK);
@@ -84,6 +85,11 @@ public class App extends JPanel{
                     Point nextMove = Pathfind.rute.remove(0); // cara kerjanya simpan nilai dari indeks 0 ke nextMove, hapus indeks 0 biar else nya jalan
                     GameData.playerX = nextMove.x; // nyimpan indeks 0 (X)
                     GameData.playerY = nextMove.y; // nyimpan indeks 0 (Y)
+                    for (Huruf h : GameData.huruf) {
+                        if(GameData.playerX == h.posisiX && GameData.playerY == h.posisiY){
+                            h.sudahDiambil = true;
+                        }
+                    }
                     repaint();
                 }
                 else{

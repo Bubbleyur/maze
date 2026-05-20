@@ -150,6 +150,10 @@ public class GameData {
     public static void tempatHuruf(){
         huruf.clear();
         huruf.add(new Huruf("O", 3, 3));
+        huruf.add(new Huruf("R", 10, 3));
+        huruf.add(new Huruf("A", 4, 5));
+        huruf.add(new Huruf("N", 7, 7));
+        huruf.add(new Huruf("G", 15, 12));
     }
 
     public GameData(int[][] map) {

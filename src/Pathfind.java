@@ -8,6 +8,7 @@ public class Pathfind {
         rute.clear();
         int korSekarangX = startX;
         int korSekarangY = startY;
+        // backtracking pencarian huruf
         for (Huruf h : GameData.huruf) {
             GameData.resetVisited();
             ruteSementara.clear();
@@ -18,14 +19,14 @@ public class Pathfind {
         }
         GameData.resetVisited();
         ruteSementara.clear();
+        // backtracking exit
         solve(korSekarangX, korSekarangY, 22, 14);
         rute.addAll(ruteSementara);
-        // return solve(startX, startY);
         return true;
     }
 
     public static boolean solve(int awalX, int awalY, int targetX, int targetY){
-
+        // Basecase
         if(awalX == targetX && awalY == targetY){
             ruteSementara.add(0, new Point(awalX, awalY));
             return true;

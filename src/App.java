@@ -80,7 +80,7 @@ public class App extends JPanel{
         boolean ketemu = Pathfind.jalanBenar(GameData.playerX, GameData.playerY);
 
         if(ketemu){
-            Timer time = new Timer(500, e ->{ //0,5 detik
+            Timer time = new Timer(100, e ->{ //0,5 detik
                 if(!Pathfind.rute.isEmpty()){
                     Point nextMove = Pathfind.rute.remove(0); // cara kerjanya simpan nilai dari indeks 0 ke nextMove, hapus indeks 0 biar else nya jalan
                     GameData.playerX = nextMove.x; // nyimpan indeks 0 (X)

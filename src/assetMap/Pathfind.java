@@ -1,8 +1,9 @@
+package assetMap;
 import java.awt.Point;
 import java.util.ArrayList;
 
 public class Pathfind {
-    static ArrayList<Point> rute = new ArrayList<>();
+    public static ArrayList<Point> rute = new ArrayList<>();
     static ArrayList<Point> ruteSementara = new ArrayList<>();
     public static boolean jalanBenar(int startX, int startY){
         rute.clear();

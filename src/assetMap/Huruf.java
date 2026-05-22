@@ -1,3 +1,4 @@
+package assetMap;
 public class Huruf {
     public String kata;
     public int posisiX;

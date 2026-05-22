@@ -1,3 +1,7 @@
+package main;
+import assetMap.GameData;
+import assetMap.Map;
+
 public class App {
     public static void main(String[] args) throws Exception {
         int[][] map1 = Map.pembuatanMap("assets/Map(angka)/Map_01.txt");

@@ -1,4 +1,7 @@
+package main;
 import javax.swing.JFrame;
+
+import assetMap.GameData;
 
 public class GameFrame extends JFrame {
     public GameFrame(){

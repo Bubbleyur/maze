@@ -1,9 +1,15 @@
+package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import assetMap.Assets;
+import assetMap.GameData;
+import assetMap.Huruf;
+import assetMap.Pathfind;
 
 public class GamePanel extends JPanel {
     boolean gameSelesai = false;
@@ -33,7 +39,7 @@ public class GamePanel extends JPanel {
         boolean ketemu = Pathfind.jalanBenar(GameData.playerX, GameData.playerY);
 
         if (ketemu) {
-            Timer time = new Timer(100, e -> { // 0,1 detik
+            Timer time = new Timer(500, e -> { // 0,5 detik
                 if (!Pathfind.rute.isEmpty()) {
                     Point nextMove = Pathfind.rute.remove(0);
                     GameData.playerX = nextMove.x;

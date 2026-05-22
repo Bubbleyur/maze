@@ -39,7 +39,7 @@ public class GamePanel extends JPanel {
         boolean ketemu = Pathfind.jalanBenar(GameData.playerX, GameData.playerY);
 
         if (ketemu) {
-            Timer time = new Timer(500, e -> { // 0,5 detik
+            Timer time = new Timer(200, e -> { // 0,5 detik
                 if (!Pathfind.rute.isEmpty()) {
                     Point nextMove = Pathfind.rute.remove(0);
                     GameData.playerX = nextMove.x;

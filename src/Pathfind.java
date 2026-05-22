@@ -13,6 +13,9 @@ public class Pathfind {
             GameData.resetVisited();
             ruteSementara.clear();
             solve(korSekarangX, korSekarangY, h.posisiX, h.posisiY);
+            if(!rute.isEmpty() && !ruteSementara.isEmpty()){ // buat gak ada duplikat di arraynya
+                ruteSementara.remove(0);
+            }
             rute.addAll(ruteSementara);
             korSekarangX = h.posisiX;
             korSekarangY = h.posisiY;

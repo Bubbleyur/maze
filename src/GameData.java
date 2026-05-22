@@ -156,10 +156,10 @@ public class GameData {
         huruf.add(new Huruf("G", 15, 12));
     }
 
-    public GameData(int[][] map) {
-        GameData.map = map;
-        GameData.ROWS = map.length;
-        GameData.COLS = map[0].length;
+    public static void loadingMap(int[][] map1) {
+        map = map1;
+        ROWS = map.length;
+        COLS = map[0].length;
         tempatHuruf();
     }
     

@@ -158,6 +158,7 @@ public class GameData {
         huruf.add(new Huruf("T", 22, 13));
         huruf.add(new Huruf("A", 9, 9));
         huruf.add(new Huruf("M", 19, 13));
+        huruf.add(new Huruf("Kunci", 3, 15));
     }
 
     public static void loadingMap(int[][] map1) {

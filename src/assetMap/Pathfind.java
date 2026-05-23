@@ -23,8 +23,23 @@ public class Pathfind {
         }
         GameData.resetVisited();
         ruteSementara.clear();
+
+
+        solve(korSekarangX, korSekarangY, 3, 15);
+        if(!rute.isEmpty() && !ruteSementara.isEmpty()){ // buat gak ada duplikat di arraynya
+            ruteSementara.remove(0);
+        }
+        rute.addAll(ruteSementara);
+        korSekarangX = 3;
+        korSekarangY = 15;
+
+        GameData.resetVisited();
+        ruteSementara.clear();
         // backtracking exit
         solve(korSekarangX, korSekarangY, 22, 14);
+        if(!rute.isEmpty() && !ruteSementara.isEmpty()){ // buat gak ada duplikat di arraynya
+            ruteSementara.remove(0);
+        }
         rute.addAll(ruteSementara);
         return true;
     }
@@ -32,15 +47,9 @@ public class Pathfind {
     public static boolean solve(int awalX, int awalY, int targetX, int targetY){
         // Basecase
         if(awalX == targetX && awalY == targetY){
-            ruteSementara.add(0, new Point(awalX, awalY));
+            ruteSementara.add(0, new Point(awalX, awalY)); // cara cepat dari rute.add(0, int[]{x,y});
             return true;
         }
-        // BASECASE
-        // if(GameData.map[awalY][awalX] == GameData.EXIT){ // EXIT = 3
-        //     System.out.println("Ketemu jalan keluar");
-        //     rute.add(0,new Point(awalX,awalY)); // cara cepat dari rute.add(0, int[]{x,y});
-        //     return true;
-        // }
         // penanda kalo kordinat x,y sudah pernah dilewati
         GameData.visited[awalY][awalX] = true;
 

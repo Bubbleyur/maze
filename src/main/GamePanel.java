@@ -1,5 +1,6 @@
 package main;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -16,6 +17,7 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         Assets.load();
+        this.setPreferredSize(new Dimension(768, 544));
     }
 
     @Override

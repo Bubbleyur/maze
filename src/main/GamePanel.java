@@ -39,13 +39,13 @@ public class GamePanel extends JPanel {
 
     public void mulaiPencarian() {
         boolean ketemu = Pathfind.jalanBenar(GameData.playerX, GameData.playerY);
-
         if (ketemu) {
             Timer time = new Timer(200, e -> { // 0,5 detik
                 if (!Pathfind.rute.isEmpty()) {
                     Point nextMove = Pathfind.rute.remove(0);
                     GameData.playerX = nextMove.x;
                     GameData.playerY = nextMove.y;
+                    GameData.indexAnimasiPlayer = (GameData.indexAnimasiPlayer + 1) % 2;
                     for (Huruf h : GameData.huruf) {
                         if (GameData.playerX == h.posisiX && GameData.playerY == h.posisiY) {
                             h.sudahDiambil = true;
@@ -55,6 +55,7 @@ public class GamePanel extends JPanel {
                 } else {
                     ((Timer) e.getSource()).stop();
                     gameSelesai = true;
+                    GameData.indexAnimasiPlayer = 0;
                     repaint();
                 }
             });

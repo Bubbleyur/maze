@@ -34,6 +34,9 @@ public class GameData {
     public static int[] dx = {0, 1, 0, -1};
     public static int[] dy = {-1, 0, 1, 0};
 
+    // Animasi
+    public static int indexAnimasiPlayer = 0;
+
     public static boolean inBounds(int x, int y) {
         return x >= 0 && y >= 0 && x < COLS && y < ROWS;
     }
@@ -139,7 +142,7 @@ public class GameData {
     public static void drawPlayer(Graphics g) {
 
         g.drawImage(
-            Assets.player,
+            Assets.animasiPlayer[indexAnimasiPlayer],
             playerX * TILE_SIZE,
             playerY * TILE_SIZE,
             TILE_SIZE,
@@ -167,5 +170,4 @@ public class GameData {
         COLS = map[0].length;
         tempatHuruf();
     }
-    
 }

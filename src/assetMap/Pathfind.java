@@ -9,24 +9,26 @@ public class Pathfind {
         rute.clear();
         int korSekarangX = startX;
         int korSekarangY = startY;
+
         // backtracking pencarian huruf
         for (Huruf h : GameData.huruf) {
             GameData.resetVisited();
             ruteSementara.clear();
             solve(korSekarangX, korSekarangY, h.posisiX, h.posisiY);
-            if(!rute.isEmpty() && !ruteSementara.isEmpty()){ // buat gak ada duplikat di arraynya
+            // buat gak ada duplikat di arraynya
+            if(!rute.isEmpty() && !ruteSementara.isEmpty()){
                 ruteSementara.remove(0);
             }
             rute.addAll(ruteSementara);
             korSekarangX = h.posisiX;
             korSekarangY = h.posisiY;
         }
+
         GameData.resetVisited();
         ruteSementara.clear();
-
-
-        solve(korSekarangX, korSekarangY, 3, 15);
-        if(!rute.isEmpty() && !ruteSementara.isEmpty()){ // buat gak ada duplikat di arraynya
+        if(!solve(korSekarangX, korSekarangY, 3, 15)) return false;
+        // buat gak ada duplikat di arraynya
+        if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);
         }
         rute.addAll(ruteSementara);
@@ -36,8 +38,9 @@ public class Pathfind {
         GameData.resetVisited();
         ruteSementara.clear();
         // backtracking exit
-        solve(korSekarangX, korSekarangY, 22, 14);
-        if(!rute.isEmpty() && !ruteSementara.isEmpty()){ // buat gak ada duplikat di arraynya
+        if(!solve(korSekarangX, korSekarangY, 22, 14)) return false;
+        // buat gak ada duplikat di arraynya
+        if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);
         }
         rute.addAll(ruteSementara);
@@ -65,10 +68,6 @@ public class Pathfind {
                 }
             }
         }
-
-        // mereset penanda
-        GameData.visited[awalY][awalX] = false;
-
         // mundur satu langkah
         return false;
     }

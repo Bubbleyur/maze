@@ -1,6 +1,7 @@
 package assetMap;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class GameData {
@@ -103,15 +104,43 @@ public class GameData {
     }
 
     public static void drawHuruf(Graphics g){
-        int offsetX = 10;
-        int offsetY = 25;
+        int offsetX = 8;
+        int offsetY = 8;
+        int spacing  = 12;
         for (Huruf i : huruf) {
             if(!i.sudahDiambil){
-                g.setColor(Color.BLACK);
-                g.setFont(new Font("Arial", Font.BOLD, 20));
-                g.drawString(i.kata, (i.posisiX * TILE_SIZE) + offsetX, (i.posisiY * TILE_SIZE) + offsetY);
+                String kataKunci = i.kata.toUpperCase();
+                int drawX = (i.posisiX * TILE_SIZE) + offsetX;
+                int drawY = (i.posisiY * TILE_SIZE) + offsetY;
+
+                if(Assets.gameObject.containsKey(kataKunci)){
+                    BufferedImage imgObjek = Assets.gameObject.get(kataKunci);
+                    g.drawImage(imgObjek, drawX, drawY, 16,16, null);
+                }
+                else{
+                    for(int j=0; j<kataKunci.length(); j++){
+                        char c = kataKunci.charAt(j);
+                        if(Assets.gameFont.containsKey(c)){
+                            BufferedImage imgHuruf = Assets.gameFont.get(c);
+                            g.drawImage(imgHuruf, drawX + (j*spacing), drawY, 16, 16, null);
+                        }
+                    }
+                }
             }
         }
+    }
+
+    public static void tempatHuruf(){
+        huruf.clear();
+        huruf.add(new Huruf("O", 3, 3));
+        huruf.add(new Huruf("R", 10, 3));
+        huruf.add(new Huruf("A", 4, 5));
+        huruf.add(new Huruf("N", 7, 7));
+        huruf.add(new Huruf("G", 15, 12));
+        huruf.add(new Huruf("T", 22, 13));
+        huruf.add(new Huruf("A", 9, 9));
+        huruf.add(new Huruf("M", 19, 13));
+        huruf.add(new Huruf("Kunci", 3, 15));
     }
 
     static boolean isWall(int r, int c) {
@@ -151,18 +180,6 @@ public class GameData {
         );
     }
 
-    public static void tempatHuruf(){
-        huruf.clear();
-        huruf.add(new Huruf("O", 3, 3));
-        huruf.add(new Huruf("R", 10, 3));
-        huruf.add(new Huruf("A", 4, 5));
-        huruf.add(new Huruf("N", 7, 7));
-        huruf.add(new Huruf("G", 15, 12));
-        huruf.add(new Huruf("T", 22, 13));
-        huruf.add(new Huruf("A", 9, 9));
-        huruf.add(new Huruf("M", 19, 13));
-        huruf.add(new Huruf("Kunci", 3, 15));
-    }
 
     public static void loadingMap(int[][] map1) {
         map = map1;

@@ -2,7 +2,6 @@ package assetMap;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
 
 public class Assets {
@@ -29,6 +28,10 @@ public class Assets {
             animasiPlayer[1] = ImageIO.read(new File("assets/entity/tile_0009.png"));
 
             gameObject.put("KUNCI", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0201.png")));
+
+            gameObject.put("PINTU", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0209.png")));
+
+            gameObject.put("KOTAK", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0202.png")));
 
             String huruf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             int indexFile = 108;

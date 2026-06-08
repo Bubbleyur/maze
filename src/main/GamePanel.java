@@ -1,16 +1,7 @@
 package main;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Point;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
-import assetMap.Assets;
-import assetMap.GameData;
-import assetMap.Huruf;
-import assetMap.Pathfind;
+import java.awt.*;
+import javax.swing.*;
+import assetMap.*;
 
 public class GamePanel extends JPanel {
     boolean gameSelesai = false;
@@ -25,8 +16,9 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
 
         GameData.drawMap(g);
-        GameData.drawPlayer(g);
+        GameData.drawItems(g);
         GameData.drawHuruf(g);
+        GameData.drawPlayer(g);
         // Tampilan game selesai
         if (gameSelesai) {
             g.setColor(Color.BLACK);
@@ -40,7 +32,7 @@ public class GamePanel extends JPanel {
     public void mulaiPencarian() {
         boolean ketemu = Pathfind.jalanBenar(GameData.playerX, GameData.playerY);
         if (ketemu) {
-            Timer time = new Timer(200, e -> { // 0,5 detik
+            Timer time = new Timer(200, e -> { // 0,2 detik
                 if (!Pathfind.rute.isEmpty()) {
                     Point nextMove = Pathfind.rute.remove(0);
                     GameData.playerX = nextMove.x;
@@ -48,7 +40,25 @@ public class GamePanel extends JPanel {
                     GameData.indexAnimasiPlayer = (GameData.indexAnimasiPlayer + 1) % 2;
                     for (Huruf h : GameData.huruf) {
                         if (GameData.playerX == h.posisiX && GameData.playerY == h.posisiY) {
-                            h.sudahDiambil = true;
+                            if(!h.sudahDiambil){
+                                h.sudahDiambil = true;
+                                System.out.println("Mengambil huruf: " + h.kata);
+                                GameData.statusKunci();
+                            }
+                        }
+                    }
+                    for (Item k : GameData.daftarKunci) {
+                        if(GameData.playerX == k.x && GameData.playerY == k.y && GameData.kunciMuncul){
+                            if(!k.sudahDiambil){
+                                k.sudahDiambil = true;
+                                if(k.asli){
+                                    System.out.println("Kunci Asli!");
+                                }
+                                else{
+                                    System.out.println("Palsu");
+                                }
+                                System.out.println("Berhasil diambil");
+                            }
                         }
                     }
                     repaint();

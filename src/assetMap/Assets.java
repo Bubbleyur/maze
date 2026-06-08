@@ -33,6 +33,8 @@ public class Assets {
 
             gameObject.put("KOTAK", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0202.png")));
 
+            gameObject.put("AIR_PANAS", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0129.png")));
+
             String huruf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             int indexFile = 108;
             for(int i=0; i<huruf.length(); i++){

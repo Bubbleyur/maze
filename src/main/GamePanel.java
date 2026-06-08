@@ -51,13 +51,21 @@ public class GamePanel extends JPanel {
                         if(GameData.playerX == k.x && GameData.playerY == k.y && GameData.kunciMuncul){
                             if(!k.sudahDiambil){
                                 k.sudahDiambil = true;
-                                if(k.asli){
+                                if(k.x == 5 && k.y == 5){
+                                    GameData.pintuAirPanas = true;
+                                    System.out.println("Pintu Kunci Air Panas!");
+                                    System.out.println("Berhasil diambil");
+                                    System.out.println("Pintu Terbuka");
+                                }
+                                else if(k.asli){
+                                    GameData.pintuAirPanas = true;
                                     System.out.println("Kunci Asli!");
+                                    System.out.println("Berhasil diambil");
                                 }
                                 else{
-                                    System.out.println("Palsu");
+                                    System.out.println("Kunci Palsu");
+                                    System.out.println("Berhasil diambil");
                                 }
-                                System.out.println("Berhasil diambil");
                             }
                         }
                     }

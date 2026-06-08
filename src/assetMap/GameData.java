@@ -8,6 +8,7 @@ public class GameData {
     // assets
     public static ArrayList<Huruf> huruf = new ArrayList<>();
     public static ArrayList<Point> daftarKotak = new ArrayList<>();
+    public static ArrayList<Point> daftarAir = new ArrayList<>();
     public static ArrayList<Item> daftarKunci = new ArrayList<>();
 
     // space
@@ -23,6 +24,7 @@ public class GameData {
     public static final int PLAYER = 2;
     public static final int EXIT = 3;
     public static final int BOX = 4;
+    public static final int AIR = 5;
 
     // moveable
     public static int playerX;
@@ -43,6 +45,7 @@ public class GameData {
 
     // Item
     public static boolean kunciMuncul = false;
+    public static boolean pintuAirPanas = false;
 
 
     public static boolean inBounds(int x, int y) {
@@ -50,10 +53,18 @@ public class GameData {
     }
 
     public static boolean canMove(int x, int y) {
-        return inBounds(x, y)
-            && map[y][x] != WALL
-            && map[y][x] != BOX
-            && !visited[y][x];
+        if(!inBounds(x, y)) return false;
+
+        if(map[y][x] == WALL || map[y][x] == BOX || (map[y][x] == AIR && !pintuAirPanas) || visited[y][x]){
+            return false;
+        }
+
+        if(x == 3 && y == 15){
+            if(!pintuAirPanas){
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void resetVisited() {
@@ -76,6 +87,7 @@ public class GameData {
                 int drawY = y * TILE_SIZE;
                 // Always draw the path tile first
                 g.drawImage(Assets.floor,drawX,drawY,TILE_SIZE,TILE_SIZE,null);
+                
                 // If it's a wall, draw the wall on top
                 if(map[y][x] == WALL) {
                     int type = getWallType(y, x);
@@ -95,10 +107,21 @@ public class GameData {
                         g.drawImage(Assets.gameObject.get("PINTU"), drawX, drawY, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
+                else if(map[y][x] == AIR){
+                    if(Assets.gameObject.containsKey("AIR_PANAS")){
+                        g.drawImage(Assets.gameObject.get("AIR_PANAS"), drawX, drawY, TILE_SIZE, TILE_SIZE,null);
+                    }
+                }
+
+                if(x == 3 && y == 15 && !pintuAirPanas){
+                    if(Assets.gameObject.containsKey("PINTU")){
+                        g.drawImage(Assets.gameObject.get("PINTU"), drawX, drawY, TILE_SIZE, TILE_SIZE,null);
+                    }
+                }
             }
         }
     }
-
+    
     public static void kotak(){
         daftarKotak.clear();
         daftarKotak.add(new Point(22,1));
@@ -107,6 +130,17 @@ public class GameData {
         for (Point p : daftarKotak) {
             if(inBounds(p.x, p.y)){
                 map[p.y][p.x] = BOX;
+            }
+        }
+    }
+
+    public static void Air(){
+        daftarAir.clear();
+        daftarAir.add(new Point(2, 15));
+
+        for (Point p : daftarAir) {
+            if(inBounds(p.x, p.y)){
+                map[p.y][p.x] = AIR;
             }
         }
     }
@@ -228,6 +262,7 @@ public class GameData {
         ROWS = map.length;
         COLS = map[0].length;
         kotak();
+        Air();
         tempatKunci();
         tempatHuruf();
     }

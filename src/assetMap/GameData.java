@@ -152,6 +152,7 @@ public class GameData {
         daftarKunci.add(new Item("KUNCI", 1, 15, true));
         daftarKunci.add(new Item("KUNCI", 3, 9, false));
         daftarKunci.add(new Item("KUNCI", 17, 3, false));
+        daftarKunci.add(new Item("KUNCI", 18, 9, false));
     }
 
     public static void statusKunci(){

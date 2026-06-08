@@ -46,6 +46,7 @@ public class GameData {
     // Item
     public static boolean kunciMuncul = false;
     public static boolean pintuAirPanas = false;
+    public static boolean airDingin = false;
 
 
     public static boolean inBounds(int x, int y) {
@@ -55,11 +56,11 @@ public class GameData {
     public static boolean canMove(int x, int y) {
         if(!inBounds(x, y)) return false;
 
-        if(map[y][x] == WALL || map[y][x] == BOX || (map[y][x] == AIR && !pintuAirPanas) || visited[y][x]){
+        if(map[y][x] == WALL || map[y][x] == BOX || (map[y][x] == AIR && !airDingin) || visited[y][x]){
             return false;
         }
 
-        if(x == 3 && y == 15){
+        if(x == 2 && y == 15){
             if(!pintuAirPanas){
                 return false;
             }
@@ -103,8 +104,8 @@ public class GameData {
                     }
                 }
                 else if(map[y][x] == EXIT){
-                    if(Assets.gameObject.containsKey("PINTU")){
-                        g.drawImage(Assets.gameObject.get("PINTU"), drawX, drawY, TILE_SIZE, TILE_SIZE, null);
+                    if(Assets.gameObject.containsKey("PINTU_TERBUKA")){
+                        g.drawImage(Assets.gameObject.get("PINTU_TERBUKA"), drawX, drawY, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
                 else if(map[y][x] == AIR){
@@ -113,9 +114,9 @@ public class GameData {
                     }
                 }
 
-                if(x == 3 && y == 15 && !pintuAirPanas){
-                    if(Assets.gameObject.containsKey("PINTU")){
-                        g.drawImage(Assets.gameObject.get("PINTU"), drawX, drawY, TILE_SIZE, TILE_SIZE,null);
+                if(x == 2 && y == 15 && !pintuAirPanas){
+                    if(Assets.gameObject.containsKey("PINTU_TERTUTUP")){
+                        g.drawImage(Assets.gameObject.get("PINTU_TERTUTUP"), drawX, drawY, TILE_SIZE, TILE_SIZE,null);
                     }
                 }
             }
@@ -134,9 +135,10 @@ public class GameData {
         }
     }
 
-    public static void Air(){
+    public static void Air(){ //tempat air panas
         daftarAir.clear();
-        daftarAir.add(new Point(2, 15));
+        daftarAir.add(new Point(3, 15));
+        daftarAir.add(new Point(2,9));
 
         for (Point p : daftarAir) {
             if(inBounds(p.x, p.y)){
@@ -148,7 +150,7 @@ public class GameData {
     public static void tempatKunci(){
         daftarKunci.clear();
         daftarKunci.add(new Item("KUNCI", 1, 15, true));
-        daftarKunci.add(new Item("KUNCI", 5, 5, false));
+        daftarKunci.add(new Item("KUNCI", 3, 9, false));
         daftarKunci.add(new Item("KUNCI", 17, 3, false));
     }
 
@@ -168,8 +170,27 @@ public class GameData {
                 if(h.kata.equalsIgnoreCase("i")) iDiambil = true;
             }
         }
+
         if(kDiambil && uDiambil && nDiambil && cDiambil && iDiambil){
             kunciMuncul = true;
+        }
+    }
+
+    public static void statusAir(){
+        boolean aDiambil = false;
+        boolean iDiambil = false;
+        boolean rDiambil = false;
+
+        for (Huruf h : huruf) {
+            if(h.sudahDiambil){
+                if(h.kata.equalsIgnoreCase("A")) aDiambil = true;
+                if(h.kata.equalsIgnoreCase("I")) iDiambil = true;
+                if(h.kata.equalsIgnoreCase("R")) rDiambil = true;
+            }
+        }
+
+        if(aDiambil && iDiambil && rDiambil){
+            airDingin = true;
         }
     }
 
@@ -220,12 +241,16 @@ public class GameData {
         huruf.add(new Huruf("N", 4, 5));
         huruf.add(new Huruf("C", 7, 7));
         huruf.add(new Huruf("I", 15, 12));
-        huruf.add(new Huruf("K", 22, 13));
-        huruf.add(new Huruf("O", 9, 9));
-        huruf.add(new Huruf("T", 19, 13));
-        huruf.add(new Huruf("A", 20, 1));
-        huruf.add(new Huruf("K", 3, 13));
-        huruf.add(new Huruf("I", 21, 3));
+
+        huruf.add(new Huruf("A", 22, 13));
+        huruf.add(new Huruf("I", 9, 9));
+        huruf.add(new Huruf("R", 19, 13));
+
+        huruf.add(new Huruf("K", 20, 1));
+        huruf.add(new Huruf("O", 3, 13));
+        huruf.add(new Huruf("T", 3, 7));
+        huruf.add(new Huruf("A", 5, 15));
+        huruf.add(new Huruf("K", 18, 15));
     }
 
     static boolean isWall(int r, int c) {

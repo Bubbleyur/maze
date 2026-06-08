@@ -29,7 +29,9 @@ public class Assets {
 
             gameObject.put("KUNCI", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0201.png")));
 
-            gameObject.put("PINTU", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0209.png")));
+            gameObject.put("PINTU_TERBUKA", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0209.png")));
+
+            gameObject.put("PINTU_TERTUTUP", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0208.png")));
 
             gameObject.put("KOTAK", ImageIO.read(new File("references/PNG/Tiles/Tiles/tile_0202.png")));
 

@@ -11,6 +11,7 @@ public class Pathfind {
         int korSekarangX = startX;
         int korSekarangY = startY;
         GameData.pintuAirPanas = false;
+        GameData.airDingin = false;
 
         // backtracking pencarian huruf
         for (Huruf h : GameData.huruf) {
@@ -28,18 +29,19 @@ public class Pathfind {
             korSekarangX = h.posisiX;
             korSekarangY = h.posisiY;
         }
+        GameData.airDingin = true;
 
-        // backtracking kunci pintu air panas
+        // Backtracking kunci pintu air panas
         GameData.resetVisited();
         ruteSementara.clear();
-        if(!solve(korSekarangX, korSekarangY, 5, 5)) return false;
+        if(!solve(korSekarangX, korSekarangY, 3, 9)) return false;
         // buat gak ada duplikat di arraynya
         if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);
         }
         rute.addAll(ruteSementara);
-        korSekarangX = 5;
-        korSekarangY = 5;
+        korSekarangX = 3;
+        korSekarangY = 9;
         GameData.pintuAirPanas = true;
 
         // Backtracking Kunci
@@ -64,6 +66,7 @@ public class Pathfind {
         }
         rute.addAll(ruteSementara);
         GameData.pintuAirPanas = false;
+        GameData.airDingin = false;
         return true;
     }
 

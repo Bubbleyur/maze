@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Pathfind {
     public static ArrayList<Point> rute = new ArrayList<>();
     static ArrayList<Point> ruteSementara = new ArrayList<>();
+
     public static boolean jalanBenar(int startX, int startY){
         rute.clear();
         int korSekarangX = startX;
@@ -12,6 +13,9 @@ public class Pathfind {
 
         // backtracking pencarian huruf
         for (Huruf h : GameData.huruf) {
+            if(h.kata.equalsIgnoreCase("Kunci") || h.kata.equalsIgnoreCase("Pintu") || h.kata.equalsIgnoreCase("Kotak")){
+                continue;
+            }
             GameData.resetVisited();
             ruteSementara.clear();
             solve(korSekarangX, korSekarangY, h.posisiX, h.posisiY);
@@ -24,21 +28,22 @@ public class Pathfind {
             korSekarangY = h.posisiY;
         }
 
+        // Backtracking Kunci
         GameData.resetVisited();
         ruteSementara.clear();
-        if(!solve(korSekarangX, korSekarangY, 3, 15)) return false;
+        if(!solve(korSekarangX, korSekarangY, 1, 15)) return false;
         // buat gak ada duplikat di arraynya
         if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);
         }
         rute.addAll(ruteSementara);
-        korSekarangX = 3;
+        korSekarangX = 1;
         korSekarangY = 15;
 
+        // Backtracking Exit
         GameData.resetVisited();
         ruteSementara.clear();
-        // backtracking exit
-        if(!solve(korSekarangX, korSekarangY, 22, 14)) return false;
+        if(!solve(korSekarangX, korSekarangY, 22, 16)) return false;
         // buat gak ada duplikat di arraynya
         if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);

@@ -45,6 +45,7 @@ public class GamePanel extends JPanel {
                                 System.out.println("Mengambil huruf: " + h.kata);
                                 GameData.statusKunci();
                                 GameData.statusAir();
+                                GameData.statusKotak();
                             }
                         }
                     }

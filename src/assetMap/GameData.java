@@ -47,6 +47,7 @@ public class GameData {
     public static boolean kunciMuncul = false;
     public static boolean pintuAirPanas = false;
     public static boolean airDingin = false;
+    public static boolean kotakLengkap = false;
 
 
     public static boolean inBounds(int x, int y) {
@@ -56,7 +57,7 @@ public class GameData {
     public static boolean canMove(int x, int y) {
         if(!inBounds(x, y)) return false;
 
-        if(map[y][x] == WALL || map[y][x] == BOX || (map[y][x] == AIR && !airDingin) || visited[y][x]){
+        if(map[y][x] == WALL || (map[y][x] == BOX && !kotakLengkap) || (map[y][x] == AIR && !airDingin) || visited[y][x]){
             return false;
         }
 
@@ -135,6 +136,35 @@ public class GameData {
         }
     }
 
+    public static void statusKotak(){
+        boolean k1Diambil = false;
+        boolean oDiambil = false;
+        boolean tDiambil = false;
+        boolean aDiambil = false;
+        boolean k2Diambil = false;
+
+        for (Huruf h : huruf) {
+            if(h.sudahDiambil){
+                if(h.kata.equalsIgnoreCase("k")){
+                    if(h.posisiX == 3 && h.posisiY == 13){
+                        k1Diambil = true;
+                    }
+                    else if(h.posisiX == 22 && h.posisiY == 13){
+                        k2Diambil = true;
+                    }
+                }
+                if (h.kata.equalsIgnoreCase("o")) oDiambil = true;
+                if (h.kata.equalsIgnoreCase("t")) tDiambil = true;
+                if (h.kata.equalsIgnoreCase("a")) aDiambil = true;
+            }
+
+            if(k1Diambil && oDiambil && tDiambil && aDiambil && k2Diambil){
+                kotakLengkap = true;
+                System.out.println("Kata KOTAK berhasil disusun!");
+            }
+        }
+    }
+
     public static void Air(){ //tempat air panas
         daftarAir.clear();
         daftarAir.add(new Point(3, 15));
@@ -174,6 +204,7 @@ public class GameData {
 
         if(kDiambil && uDiambil && nDiambil && cDiambil && iDiambil){
             kunciMuncul = true;
+            System.out.println("Kata KUNCI berhasil disusun!");
         }
     }
 
@@ -192,6 +223,7 @@ public class GameData {
 
         if(aDiambil && iDiambil && rDiambil){
             airDingin = true;
+            System.out.println("Kata AIR berhasil disusun!");
         }
     }
 

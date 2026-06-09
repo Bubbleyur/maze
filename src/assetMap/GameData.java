@@ -146,19 +146,25 @@ public class GameData {
         for (Huruf h : huruf) {
             if(h.sudahDiambil){
                 if(h.kata.equalsIgnoreCase("k")){
-                    if(h.posisiX == 3 && h.posisiY == 13){
+                    if(h.posisiX == 20 && h.posisiY == 1){
                         k1Diambil = true;
                     }
-                    else if(h.posisiX == 22 && h.posisiY == 13){
+                    else if(h.posisiX == 18 && h.posisiY == 15){
                         k2Diambil = true;
                     }
                 }
                 if (h.kata.equalsIgnoreCase("o")) oDiambil = true;
                 if (h.kata.equalsIgnoreCase("t")) tDiambil = true;
-                if (h.kata.equalsIgnoreCase("a")) aDiambil = true;
+                if (h.kata.equalsIgnoreCase("a")){
+                    if(h.posisiX == 5 && h.posisiY == 15){
+                        aDiambil = true;
+                    }
+                }
             }
-
-            if(k1Diambil && oDiambil && tDiambil && aDiambil && k2Diambil){
+        }
+        if(k1Diambil && oDiambil && tDiambil && aDiambil && k2Diambil){
+            //Biar gak spam Kata Kotak berhasil disusun
+            if(!kotakLengkap){
                 kotakLengkap = true;
                 System.out.println("Kata KOTAK berhasil disusun!");
             }
@@ -203,8 +209,10 @@ public class GameData {
         }
 
         if(kDiambil && uDiambil && nDiambil && cDiambil && iDiambil){
-            kunciMuncul = true;
-            System.out.println("Kata KUNCI berhasil disusun!");
+            if(!kunciMuncul){
+                kunciMuncul = true;
+                System.out.println("Kata KUNCI berhasil disusun!");
+            }
         }
     }
 
@@ -222,8 +230,10 @@ public class GameData {
         }
 
         if(aDiambil && iDiambil && rDiambil){
-            airDingin = true;
-            System.out.println("Kata AIR berhasil disusun!");
+            if(!airDingin){
+                airDingin = true;
+                System.out.println("Kata AIR berhasil disusun!");
+            }
         }
     }
 

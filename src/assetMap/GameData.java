@@ -163,8 +163,9 @@ public class GameData {
             daftarKotak.add(new Point(17,9));
         }
         else{
-            daftarKotak.add(new Point(14, 1));  // Menjaga ketat Kunci Air Panas
-            daftarKotak.add(new Point(21, 15)); // Menjaga Pintu Exit (Lapis 2)
+            daftarKotak.add(new Point(14, 1));
+            daftarKotak.add(new Point(21, 15));
+            daftarKotak.add(new Point(21,8));
         }
 
         for (Point p : daftarKotak) {
@@ -183,8 +184,10 @@ public class GameData {
             daftarAir.add(new Point(11,14));
         }
         else{
-            daftarAir.add(new Point(18, 13)); // Menjaga ketat Kunci Asli
-            daftarAir.add(new Point(20, 15)); // Menjaga Pintu Exit (Lapis 1)
+            daftarAir.add(new Point(18, 13));
+            daftarAir.add(new Point(20, 15));
+            daftarAir.add(new Point(22, 1));
+            daftarAir.add(new Point(22,5));
         }
 
         for (Point p : daftarAir) {
@@ -242,14 +245,12 @@ public class GameData {
             huruf.add(new Huruf("C", 13, 9));
             huruf.add(new Huruf("I", 17, 11));
 
-            // Kata AIR (A dan I sudah terwakili di atas)
+            // Kata AIR
             huruf.add(new Huruf("R", 7, 13));
 
-            // Kata EXIT (I dan T sudah terwakili di atas)
+            // Kata EXIT
             huruf.add(new Huruf("E", 11, 13));
             huruf.add(new Huruf("X", 5, 11));
-
-            // Huruf tambahan agar map lebih penuh dan AI makin sibuk
             huruf.add(new Huruf("I", 1, 7));
             huruf.add(new Huruf("T", 15, 7));
         }

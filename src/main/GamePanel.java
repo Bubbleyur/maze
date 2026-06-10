@@ -9,6 +9,10 @@ public class GamePanel extends JPanel {
     public GamePanel() {
         Assets.load();
         this.setPreferredSize(new Dimension(768, 544));
+        int[][] mapLevel1 = Map.pembuatanMap("assets/Map(angka)/Map_01.txt");
+        GameData.loadingMap(mapLevel1);
+        GameData.playerX = 1;
+        GameData.playerY = 1;
     }
 
     @Override
@@ -43,9 +47,7 @@ public class GamePanel extends JPanel {
                             if(!h.sudahDiambil){
                                 h.sudahDiambil = true;
                                 System.out.println("Mengambil huruf: " + h.kata);
-                                GameData.statusKunci();
-                                GameData.statusAir();
-                                GameData.statusKotak();
+                                GameData.cekStatusHuruf();
                             }
                         }
                     }
@@ -53,7 +55,7 @@ public class GamePanel extends JPanel {
                         if(GameData.playerX == k.x && GameData.playerY == k.y && GameData.kunciMuncul){
                             if(!k.sudahDiambil){
                                 k.sudahDiambil = true;
-                                if(k.x == 3 && k.y == 9){
+                                if(k.x == GameData.POSISI_KUNCI_AIR_PANAS.x && k.y == GameData.POSISI_KUNCI_AIR_PANAS.y){
                                     GameData.pintuAirPanas = true;
                                     System.out.println("Pintu Kunci Air Panas!");
                                     System.out.println("Berhasil diambil");
@@ -74,8 +76,25 @@ public class GamePanel extends JPanel {
                     repaint();
                 } else {
                     ((Timer) e.getSource()).stop();
-                    gameSelesai = true;
-                    GameData.indexAnimasiPlayer = 0;
+                    if(GameData.map[GameData.playerY][GameData.playerX] == GameData.EXIT){
+                        if(GameData.levelMap == 1){
+                            System.out.println("Map 1 sudah selesai! Pindah ke Map 2");
+                            int[][] mapLevel2 = Map.pembuatanMap("assets/Map(angka)/Map_02.txt");
+                            GameData.levelMap = 2;
+                            GameData.loadingMap(mapLevel2);
+                            GameData.playerX = 1;
+                            GameData.playerY = 1;
+                            mulaiPencarian();
+                        }
+                        else{
+                            System.out.println("Game Selesai");
+                            gameSelesai = true;
+                            GameData.indexAnimasiPlayer = 0;
+                        }
+                    }
+                    else{
+                        System.out.println("Gagal");
+                    }
                     repaint();
                 }
             });

@@ -43,9 +43,7 @@ public class GamePanel extends JPanel {
                             if(!h.sudahDiambil){
                                 h.sudahDiambil = true;
                                 System.out.println("Mengambil huruf: " + h.kata);
-                                GameData.statusKunci();
-                                GameData.statusAir();
-                                GameData.statusKotak();
+                                GameData.cekStatusHuruf();
                             }
                         }
                     }
@@ -74,7 +72,12 @@ public class GamePanel extends JPanel {
                     repaint();
                 } else {
                     ((Timer) e.getSource()).stop();
-                    gameSelesai = true;
+                    if(GameData.map[GameData.playerY][GameData.playerX] == GameData.EXIT){
+                        gameSelesai = true;
+                    }
+                    else{
+                        System.out.println("Gagal");
+                    }
                     GameData.indexAnimasiPlayer = 0;
                     repaint();
                 }

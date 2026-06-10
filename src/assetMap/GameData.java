@@ -26,6 +26,9 @@ public class GameData {
     public static final int BOX = 4;
     public static final int AIR = 5;
 
+    // pintu air panas
+    public static final Point POSISI_PINTU_AIRPANAS = new Point(2,15);
+
     // moveable
     public static int playerX;
     public static int playerY;
@@ -61,7 +64,7 @@ public class GameData {
             return false;
         }
 
-        if(x == 2 && y == 15){
+        if(x == POSISI_PINTU_AIRPANAS.x && y == POSISI_PINTU_AIRPANAS.y){
             if(!pintuAirPanas){
                 return false;
             }
@@ -136,41 +139,6 @@ public class GameData {
         }
     }
 
-    public static void statusKotak(){
-        boolean k1Diambil = false;
-        boolean oDiambil = false;
-        boolean tDiambil = false;
-        boolean aDiambil = false;
-        boolean k2Diambil = false;
-
-        for (Huruf h : huruf) {
-            if(h.sudahDiambil){
-                if(h.kata.equalsIgnoreCase("k")){
-                    if(h.posisiX == 20 && h.posisiY == 1){
-                        k1Diambil = true;
-                    }
-                    else if(h.posisiX == 18 && h.posisiY == 15){
-                        k2Diambil = true;
-                    }
-                }
-                if (h.kata.equalsIgnoreCase("o")) oDiambil = true;
-                if (h.kata.equalsIgnoreCase("t")) tDiambil = true;
-                if (h.kata.equalsIgnoreCase("a")){
-                    if(h.posisiX == 5 && h.posisiY == 15){
-                        aDiambil = true;
-                    }
-                }
-            }
-        }
-        if(k1Diambil && oDiambil && tDiambil && aDiambil && k2Diambil){
-            //Biar gak spam Kata Kotak berhasil disusun
-            if(!kotakLengkap){
-                kotakLengkap = true;
-                System.out.println("Kata KOTAK berhasil disusun!");
-            }
-        }
-    }
-
     public static void Air(){ //tempat air panas
         daftarAir.clear();
         daftarAir.add(new Point(3, 15));
@@ -191,49 +159,57 @@ public class GameData {
         daftarKunci.add(new Item("KUNCI", 18, 9, false));
     }
 
-    public static void statusKunci(){
-        boolean kDiambil = false;
-        boolean uDiambil = false;
-        boolean nDiambil = false;
-        boolean cDiambil = false;
-        boolean iDiambil = false;
+    public static void tempatHuruf(){
+        huruf.clear();
+        huruf.add(new Huruf("K", 3, 3));
+        huruf.add(new Huruf("U", 10, 3));
+        huruf.add(new Huruf("N", 4, 5));
+        huruf.add(new Huruf("C", 7, 7));
+        huruf.add(new Huruf("I", 15, 12));
 
-        for (Huruf h : huruf) {
-            if(h.sudahDiambil){
-                if(h.kata.equalsIgnoreCase("k")) kDiambil = true;
-                if(h.kata.equalsIgnoreCase("u")) uDiambil = true;
-                if(h.kata.equalsIgnoreCase("n")) nDiambil = true;
-                if(h.kata.equalsIgnoreCase("c")) cDiambil = true;
-                if(h.kata.equalsIgnoreCase("i")) iDiambil = true;
-            }
-        }
+        huruf.add(new Huruf("A", 22, 13));
+        huruf.add(new Huruf("I", 9, 9));
+        huruf.add(new Huruf("R", 19, 13));
 
-        if(kDiambil && uDiambil && nDiambil && cDiambil && iDiambil){
-            if(!kunciMuncul){
-                kunciMuncul = true;
-                System.out.println("Kata KUNCI berhasil disusun!");
-            }
-        }
+        huruf.add(new Huruf("K", 20, 1));
+        huruf.add(new Huruf("O", 3, 13));
+        huruf.add(new Huruf("T", 3, 7));
+        huruf.add(new Huruf("A", 5, 15));
+        huruf.add(new Huruf("K", 18, 15));
     }
 
-    public static void statusAir(){
-        boolean aDiambil = false;
-        boolean iDiambil = false;
-        boolean rDiambil = false;
+    public static void cekStatusHuruf(){
+        int countK = 0, countO = 0, countT = 0, countA = 0, countU = 0, countN = 0, countC = 0, countI = 0, countR = 0;
 
         for (Huruf h : huruf) {
             if(h.sudahDiambil){
-                if(h.kata.equalsIgnoreCase("A")) aDiambil = true;
-                if(h.kata.equalsIgnoreCase("I")) iDiambil = true;
-                if(h.kata.equalsIgnoreCase("R")) rDiambil = true;
+                switch (h.kata.toUpperCase()) {
+                    case "K": countK++; break;
+                    case "O": countO++; break;
+                    case "T": countT++; break;
+                    case "A": countA++; break;
+                    case "U": countU++; break;
+                    case "N": countN++; break;
+                    case "C": countC++; break;
+                    case "I": countI++; break;
+                    case "R": countR++; break;
+                }
             }
         }
 
-        if(aDiambil && iDiambil && rDiambil){
-            if(!airDingin){
-                airDingin = true;
-                System.out.println("Kata AIR berhasil disusun!");
-            }
+        if(countK >= 2 && countO >= 1 && countT >= 1 && countA >= 1 && !kotakLengkap){
+            kotakLengkap = true;
+            System.out.println("Kata KOTAK berhasil disusun");
+        }
+
+        if(countK >= 1 && countU >= 1 && countN >= 1 && countC >= 1 && countI >= 1 && !kunciMuncul){
+            kunciMuncul = true;
+            System.out.println("kata KUNCI berhasil disusun");
+        }
+
+        if(countA >= 1 && countI >= 1 && countR >= 1 && !airDingin){
+            airDingin = true;
+            System.out.println("kata AIR berhasil disusun");
         }
     }
 
@@ -275,25 +251,6 @@ public class GameData {
                 }
             }
         }
-    }
-
-    public static void tempatHuruf(){
-        huruf.clear();
-        huruf.add(new Huruf("K", 3, 3));
-        huruf.add(new Huruf("U", 10, 3));
-        huruf.add(new Huruf("N", 4, 5));
-        huruf.add(new Huruf("C", 7, 7));
-        huruf.add(new Huruf("I", 15, 12));
-
-        huruf.add(new Huruf("A", 22, 13));
-        huruf.add(new Huruf("I", 9, 9));
-        huruf.add(new Huruf("R", 19, 13));
-
-        huruf.add(new Huruf("K", 20, 1));
-        huruf.add(new Huruf("O", 3, 13));
-        huruf.add(new Huruf("T", 3, 7));
-        huruf.add(new Huruf("A", 5, 15));
-        huruf.add(new Huruf("K", 18, 15));
     }
 
     static boolean isWall(int r, int c) {

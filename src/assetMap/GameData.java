@@ -11,11 +11,9 @@ public class GameData {
     public static ArrayList<Point> daftarAir = new ArrayList<>();
     public static ArrayList<Item> daftarKunci = new ArrayList<>();
 
-    // space
+    // map
     public static final int TILE_SIZE = 32;
-
     public static int[][] map;
-
     public static boolean[][] visited;
 
     // constants

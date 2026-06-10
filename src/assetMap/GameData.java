@@ -67,9 +67,10 @@ public class GameData {
                 break;
         
             case 2:
-                POSISI_PINTU_AIR_PANAS = new Point(1, 11);
-                POSISI_KUNCI_AIR_PANAS = new Point(9, 9);
-                POSISI_KUNCI_ASLI = new Point(10, 3);
+                // Di dalam setupLevelMap() -> case 2:
+                POSISI_KUNCI_AIR_PANAS = new Point(15, 1);  // Lorong buntu di kanan atas
+                POSISI_KUNCI_ASLI = new Point(19, 13);      // Lorong buntu di kanan bawah
+                POSISI_PINTU_AIR_PANAS = new Point(22, 15); // Tepat satu petak sebelum Exit
                 POSISI_EXIT = new Point(22, 16);
                 break;
         }
@@ -162,7 +163,8 @@ public class GameData {
             daftarKotak.add(new Point(17,9));
         }
         else{
-            daftarKotak.add(new Point(10,5));
+            daftarKotak.add(new Point(14, 1));  // Menjaga ketat Kunci Air Panas
+            daftarKotak.add(new Point(21, 15)); // Menjaga Pintu Exit (Lapis 2)
         }
 
         for (Point p : daftarKotak) {
@@ -181,7 +183,8 @@ public class GameData {
             daftarAir.add(new Point(11,14));
         }
         else{
-            daftarAir.add(new Point(5, 12));
+            daftarAir.add(new Point(18, 13)); // Menjaga ketat Kunci Asli
+            daftarAir.add(new Point(20, 15)); // Menjaga Pintu Exit (Lapis 1)
         }
 
         for (Point p : daftarAir) {
@@ -227,7 +230,28 @@ public class GameData {
             huruf.add(new Huruf("X", 17, 7));
         }
         else{
-            huruf.add(new Huruf("K", 5, 5));
+            huruf.add(new Huruf("K", 1, 1));
+            huruf.add(new Huruf("O", 5, 3));
+            huruf.add(new Huruf("T", 7, 7));
+            huruf.add(new Huruf("A", 1, 15));
+            huruf.add(new Huruf("K", 9, 11));
+
+            // Kata KUNCI
+            huruf.add(new Huruf("U", 11, 5));
+            huruf.add(new Huruf("N", 17, 3));
+            huruf.add(new Huruf("C", 13, 9));
+            huruf.add(new Huruf("I", 17, 11));
+
+            // Kata AIR (A dan I sudah terwakili di atas)
+            huruf.add(new Huruf("R", 7, 13));
+
+            // Kata EXIT (I dan T sudah terwakili di atas)
+            huruf.add(new Huruf("E", 11, 13));
+            huruf.add(new Huruf("X", 5, 11));
+
+            // Huruf tambahan agar map lebih penuh dan AI makin sibuk
+            huruf.add(new Huruf("I", 1, 7));
+            huruf.add(new Huruf("T", 15, 7));
         }
     }
 
@@ -267,7 +291,7 @@ public class GameData {
             System.out.println("kata AIR berhasil disusun");
         }
 
-        if(countE >= 1 && countX >=1 && countI >=2 && countT >= 1){
+        if(countE >= 1 && countX >=1 && countI >=2 && countT >= 1 && !exitLengkap){
             exitLengkap = true;
             System.out.println("kata Exit berhasil disusun");
         }

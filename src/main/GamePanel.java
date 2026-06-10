@@ -55,7 +55,7 @@ public class GamePanel extends JPanel {
                         if(GameData.playerX == k.x && GameData.playerY == k.y && GameData.kunciMuncul){
                             if(!k.sudahDiambil){
                                 k.sudahDiambil = true;
-                                if(k.x == 3 && k.y == 9){
+                                if(k.x == GameData.POSISI_KUNCI_AIR_PANAS.x && k.y == GameData.POSISI_KUNCI_AIR_PANAS.y){
                                     GameData.pintuAirPanas = true;
                                     System.out.println("Pintu Kunci Air Panas!");
                                     System.out.println("Berhasil diambil");

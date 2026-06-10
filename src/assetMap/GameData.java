@@ -55,6 +55,7 @@ public class GameData {
     public static boolean pintuAirPanas = false;
     public static boolean airDingin = false;
     public static boolean kotakLengkap = false;
+    public static boolean exitLengkap = false;
 
     public static void setupLevelMap(){
         switch (levelMap) {
@@ -129,8 +130,13 @@ public class GameData {
                     }
                 }
                 else if(map[y][x] == EXIT){
-                    if(Assets.gameObject.containsKey("PINTU_TERBUKA")){
-                        g.drawImage(Assets.gameObject.get("PINTU_TERBUKA"), drawX, drawY, TILE_SIZE, TILE_SIZE, null);
+                    if(exitLengkap){
+                        if(Assets.gameObject.containsKey("PINTU_TERBUKA")){
+                            g.drawImage(Assets.gameObject.get("PINTU_TERBUKA"), drawX, drawY, TILE_SIZE, TILE_SIZE, null);
+                        }
+                    }
+                    else{
+                        g.drawImage(Assets.gameObject.get("KOTAK"), drawX, drawY, TILE_SIZE, TILE_SIZE, null);
                     }
                 }
                 else if(map[y][x] == AIR){
@@ -153,6 +159,7 @@ public class GameData {
         if(levelMap == 1){
             daftarKotak.add(new Point(22,1));
             daftarKotak.add(new Point(14,13));
+            daftarKotak.add(new Point(17,9));
         }
         else{
             daftarKotak.add(new Point(10,5));
@@ -170,6 +177,8 @@ public class GameData {
         if(levelMap == 1){
             daftarAir.add(new Point(3, 15));
             daftarAir.add(new Point(2,9));
+            daftarAir.add(new Point(15,15));
+            daftarAir.add(new Point(11,14));
         }
         else{
             daftarAir.add(new Point(5, 12));
@@ -210,10 +219,12 @@ public class GameData {
             huruf.add(new Huruf("R", 19, 13));
     
             huruf.add(new Huruf("K", 20, 1));
-            huruf.add(new Huruf("O", 3, 13));
+            huruf.add(new Huruf("O", 1, 5));
             huruf.add(new Huruf("T", 3, 7));
-            huruf.add(new Huruf("A", 5, 15));
-            huruf.add(new Huruf("K", 18, 15));
+
+            //EXIT
+            huruf.add(new Huruf("E", 13, 3));
+            huruf.add(new Huruf("X", 17, 7));
         }
         else{
             huruf.add(new Huruf("K", 5, 5));
@@ -221,7 +232,7 @@ public class GameData {
     }
 
     public static void cekStatusHuruf(){
-        int countK = 0, countO = 0, countT = 0, countA = 0, countU = 0, countN = 0, countC = 0, countI = 0, countR = 0;
+        int countK = 0, countO = 0, countT = 0, countA = 0, countU = 0, countN = 0, countC = 0, countI = 0, countR = 0, countE = 0, countX = 0;;
 
         for (Huruf h : huruf) {
             if(h.sudahDiambil){
@@ -235,6 +246,8 @@ public class GameData {
                     case "C": countC++; break;
                     case "I": countI++; break;
                     case "R": countR++; break;
+                    case "E": countE++; break;
+                    case "X": countX++; break;
                 }
             }
         }
@@ -252,6 +265,11 @@ public class GameData {
         if(countA >= 1 && countI >= 1 && countR >= 1 && !airDingin){
             airDingin = true;
             System.out.println("kata AIR berhasil disusun");
+        }
+
+        if(countE >= 1 && countX >=1 && countI >=2 && countT >= 1){
+            exitLengkap = true;
+            System.out.println("kata Exit berhasil disusun");
         }
     }
 
@@ -340,6 +358,7 @@ public class GameData {
         pintuAirPanas = false;
         airDingin = false;
         kotakLengkap = false;
+        exitLengkap = false;
         indexAnimasiPlayer = 0;
     }
 }

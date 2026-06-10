@@ -33,6 +33,7 @@ public class Pathfind {
         }
         GameData.airDingin = true;
         GameData.kotakLengkap = true;
+        GameData.exitLengkap = true;
 
         // Backtracking kunci pintu air panas
         GameData.resetVisited();
@@ -72,6 +73,7 @@ public class Pathfind {
         GameData.pintuAirPanas = false;
         GameData.airDingin = false;
         GameData.kotakLengkap = false;
+        GameData.exitLengkap = false;
         return true;
     }
 

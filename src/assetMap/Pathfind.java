@@ -37,32 +37,32 @@ public class Pathfind {
         // Backtracking kunci pintu air panas
         GameData.resetVisited();
         ruteSementara.clear();
-        if(!solve(korSekarangX, korSekarangY, 3, 9)) return false;
+        if(!solve(korSekarangX, korSekarangY, GameData.POSISI_KUNCI_AIR_PANAS.x, GameData.POSISI_KUNCI_AIR_PANAS.y)) return false;
         // buat gak ada duplikat di arraynya
         if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);
         }
         rute.addAll(ruteSementara);
-        korSekarangX = 3;
-        korSekarangY = 9;
+        korSekarangX = GameData.POSISI_KUNCI_AIR_PANAS.x;
+        korSekarangY = GameData.POSISI_KUNCI_AIR_PANAS.y;
         GameData.pintuAirPanas = true;
 
         // Backtracking Kunci
         GameData.resetVisited();
         ruteSementara.clear();
-        if(!solve(korSekarangX, korSekarangY, 1, 15)) return false;
+        if(!solve(korSekarangX, korSekarangY, GameData.POSISI_KUNCI_ASLI.x, GameData.POSISI_KUNCI_ASLI.y)) return false;
         // buat gak ada duplikat di arraynya
         if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);
         }
         rute.addAll(ruteSementara);
-        korSekarangX = 1;
-        korSekarangY = 15;
+        korSekarangX = GameData.POSISI_KUNCI_ASLI.x;
+        korSekarangY = GameData.POSISI_KUNCI_ASLI.y;
 
         // Backtracking Exit
         GameData.resetVisited();
         ruteSementara.clear();
-        if(!solve(korSekarangX, korSekarangY, 22, 16)) return false;
+        if(!solve(korSekarangX, korSekarangY, GameData.POSISI_EXIT.x, GameData.POSISI_EXIT.y)) return false;
         // buat gak ada duplikat di arraynya
         if(!rute.isEmpty() && !ruteSementara.isEmpty()){
             ruteSementara.remove(0);

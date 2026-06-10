@@ -9,6 +9,10 @@ public class GamePanel extends JPanel {
     public GamePanel() {
         Assets.load();
         this.setPreferredSize(new Dimension(768, 544));
+        int[][] mapLevel1 = Map.pembuatanMap("assets/Map(angka)/Map_01.txt");
+        GameData.loadingMap(mapLevel1);
+        GameData.playerX = 1;
+        GameData.playerY = 1;
     }
 
     @Override
@@ -73,12 +77,24 @@ public class GamePanel extends JPanel {
                 } else {
                     ((Timer) e.getSource()).stop();
                     if(GameData.map[GameData.playerY][GameData.playerX] == GameData.EXIT){
-                        gameSelesai = true;
+                        if(GameData.levelMap == 1){
+                            System.out.println("Map 1 sudah selesai! Pindah ke Map 2");
+                            int[][] mapLevel2 = Map.pembuatanMap("assets/Map(angka)/Map_02.txt");
+                            GameData.levelMap = 2;
+                            GameData.loadingMap(mapLevel2);
+                            GameData.playerX = 1;
+                            GameData.playerY = 1;
+                            mulaiPencarian();
+                        }
+                        else{
+                            System.out.println("Game Selesai");
+                            gameSelesai = true;
+                            GameData.indexAnimasiPlayer = 0;
+                        }
                     }
                     else{
                         System.out.println("Gagal");
                     }
-                    GameData.indexAnimasiPlayer = 0;
                     repaint();
                 }
             });

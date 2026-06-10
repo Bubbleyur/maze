@@ -24,8 +24,13 @@ public class GameData {
     public static final int BOX = 4;
     public static final int AIR = 5;
 
+    public static int levelMap = 1;
+
     // pintu air panas
-    public static final Point POSISI_PINTU_AIRPANAS = new Point(2,15);
+    public static Point POSISI_PINTU_AIR_PANAS;
+    public static Point POSISI_KUNCI_AIR_PANAS;
+    public static Point POSISI_KUNCI_ASLI;
+    public static Point POSISI_EXIT;
 
     // moveable
     public static int playerX;
@@ -37,12 +42,13 @@ public class GameData {
     public static int ROWS;
     public static int COLS;
 
+    // Animasi
+    public static int indexAnimasiPlayer = 0;
+
     // direction
     public static int[] dx = {0, 1, 0, -1};
     public static int[] dy = {-1, 0, 1, 0};
 
-    // Animasi
-    public static int indexAnimasiPlayer = 0;
 
     // Item
     public static boolean kunciMuncul = false;
@@ -50,6 +56,23 @@ public class GameData {
     public static boolean airDingin = false;
     public static boolean kotakLengkap = false;
 
+    public static void setupLevelMap(){
+        switch (levelMap) {
+            case 1:
+                POSISI_PINTU_AIR_PANAS = new Point(2, 15);
+                POSISI_KUNCI_AIR_PANAS = new Point(3, 9);
+                POSISI_KUNCI_ASLI = new Point(1, 15);
+                POSISI_EXIT = new Point(22, 16);
+                break;
+        
+            case 2:
+                POSISI_PINTU_AIR_PANAS = new Point(1, 11);
+                POSISI_KUNCI_AIR_PANAS = new Point(9, 9);
+                POSISI_KUNCI_ASLI = new Point(10, 3);
+                POSISI_EXIT = new Point(22, 16);
+                break;
+        }
+    }
 
     public static boolean inBounds(int x, int y) {
         return x >= 0 && y >= 0 && x < COLS && y < ROWS;
@@ -62,7 +85,7 @@ public class GameData {
             return false;
         }
 
-        if(x == POSISI_PINTU_AIRPANAS.x && y == POSISI_PINTU_AIRPANAS.y){
+        if(x == POSISI_PINTU_AIR_PANAS.x && y == POSISI_PINTU_AIR_PANAS.y){
             if(!pintuAirPanas){
                 return false;
             }
@@ -116,7 +139,7 @@ public class GameData {
                     }
                 }
 
-                if(x == 2 && y == 15 && !pintuAirPanas){
+                if(x == POSISI_PINTU_AIR_PANAS.x && y == POSISI_PINTU_AIR_PANAS.y && !pintuAirPanas){
                     if(Assets.gameObject.containsKey("PINTU_TERTUTUP")){
                         g.drawImage(Assets.gameObject.get("PINTU_TERTUTUP"), drawX, drawY, TILE_SIZE, TILE_SIZE,null);
                     }
@@ -127,8 +150,13 @@ public class GameData {
     
     public static void kotak(){
         daftarKotak.clear();
-        daftarKotak.add(new Point(22,1));
-        daftarKotak.add(new Point(14,13));
+        if(levelMap == 1){
+            daftarKotak.add(new Point(22,1));
+            daftarKotak.add(new Point(14,13));
+        }
+        else{
+            daftarKotak.add(new Point(10,5));
+        }
 
         for (Point p : daftarKotak) {
             if(inBounds(p.x, p.y)){
@@ -139,8 +167,13 @@ public class GameData {
 
     public static void Air(){ //tempat air panas
         daftarAir.clear();
-        daftarAir.add(new Point(3, 15));
-        daftarAir.add(new Point(2,9));
+        if(levelMap == 1){
+            daftarAir.add(new Point(3, 15));
+            daftarAir.add(new Point(2,9));
+        }
+        else{
+            daftarAir.add(new Point(5, 12));
+        }
 
         for (Point p : daftarAir) {
             if(inBounds(p.x, p.y)){
@@ -151,29 +184,40 @@ public class GameData {
 
     public static void tempatKunci(){
         daftarKunci.clear();
-        daftarKunci.add(new Item("KUNCI", 1, 15, true));
-        daftarKunci.add(new Item("KUNCI", 3, 9, false));
-        daftarKunci.add(new Item("KUNCI", 17, 3, false));
-        daftarKunci.add(new Item("KUNCI", 18, 9, false));
+        if(levelMap == 1){
+            daftarKunci.add(new Item("KUNCI", 1, 15, true));
+            daftarKunci.add(new Item("KUNCI", 3, 9, false));
+            daftarKunci.add(new Item("KUNCI", 17, 3, false));
+            daftarKunci.add(new Item("KUNCI", 18, 9, false));
+        }
+        else{
+            daftarKunci.add(new Item("KUNCI", POSISI_KUNCI_ASLI.x, POSISI_KUNCI_ASLI.y, true));
+            daftarKunci.add(new Item("KUNCI", POSISI_KUNCI_AIR_PANAS.x, POSISI_KUNCI_AIR_PANAS.y, false));
+        }
     }
 
     public static void tempatHuruf(){
         huruf.clear();
-        huruf.add(new Huruf("K", 3, 3));
-        huruf.add(new Huruf("U", 10, 3));
-        huruf.add(new Huruf("N", 4, 5));
-        huruf.add(new Huruf("C", 7, 7));
-        huruf.add(new Huruf("I", 15, 12));
-
-        huruf.add(new Huruf("A", 22, 13));
-        huruf.add(new Huruf("I", 9, 9));
-        huruf.add(new Huruf("R", 19, 13));
-
-        huruf.add(new Huruf("K", 20, 1));
-        huruf.add(new Huruf("O", 3, 13));
-        huruf.add(new Huruf("T", 3, 7));
-        huruf.add(new Huruf("A", 5, 15));
-        huruf.add(new Huruf("K", 18, 15));
+        if(levelMap == 1){
+            huruf.add(new Huruf("K", 3, 3));
+            huruf.add(new Huruf("U", 10, 3));
+            huruf.add(new Huruf("N", 4, 5));
+            huruf.add(new Huruf("C", 7, 7));
+            huruf.add(new Huruf("I", 15, 12));
+    
+            huruf.add(new Huruf("A", 22, 13));
+            huruf.add(new Huruf("I", 9, 9));
+            huruf.add(new Huruf("R", 19, 13));
+    
+            huruf.add(new Huruf("K", 20, 1));
+            huruf.add(new Huruf("O", 3, 13));
+            huruf.add(new Huruf("T", 3, 7));
+            huruf.add(new Huruf("A", 5, 15));
+            huruf.add(new Huruf("K", 18, 15));
+        }
+        else{
+            huruf.add(new Huruf("K", 5, 5));
+        }
     }
 
     public static void cekStatusHuruf(){
@@ -284,9 +328,18 @@ public class GameData {
         map = map1;
         ROWS = map.length;
         COLS = map[0].length;
+
+        setupLevelMap();
+
         kotak();
         Air();
         tempatKunci();
         tempatHuruf();
+
+        kunciMuncul = false;
+        pintuAirPanas = false;
+        airDingin = false;
+        kotakLengkap = false;
+        indexAnimasiPlayer = 0;
     }
 }

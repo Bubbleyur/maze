@@ -12,9 +12,9 @@ public class GameData {
     public static ArrayList<Item> daftarKunci = new ArrayList<>();
 
     // map
-    public static final int TILE_SIZE = 32;
+    public static final int TILE_SIZE = 32; //ukuran 1 tile
     public static int[][] map;
-    public static boolean[][] visited;
+    public static boolean[][] visited; // melacak jalur backtracking
 
     // constants
     public static final int WALL = 0;
@@ -26,7 +26,7 @@ public class GameData {
 
     public static int levelMap = 1;
 
-    // pintu air panas
+    // kordiant posisi
     public static Point POSISI_PINTU_AIR_PANAS;
     public static Point POSISI_KUNCI_AIR_PANAS;
     public static Point POSISI_KUNCI_ASLI;
@@ -67,26 +67,28 @@ public class GameData {
                 break;
         
             case 2:
-                // Di dalam setupLevelMap() -> case 2:
-                POSISI_KUNCI_AIR_PANAS = new Point(15, 1);  // Lorong buntu di kanan atas
-                POSISI_KUNCI_ASLI = new Point(19, 13);      // Lorong buntu di kanan bawah
-                POSISI_PINTU_AIR_PANAS = new Point(22, 15); // Tepat satu petak sebelum Exit
+                POSISI_KUNCI_AIR_PANAS = new Point(15, 1);
+                POSISI_KUNCI_ASLI = new Point(19, 13);
+                POSISI_PINTU_AIR_PANAS = new Point(22, 15);
                 POSISI_EXIT = new Point(22, 16);
                 break;
         }
     }
 
+    // Mencegah error index out of bounds
     public static boolean inBounds(int x, int y) {
         return x >= 0 && y >= 0 && x < COLS && y < ROWS;
     }
 
     public static boolean canMove(int x, int y) {
-        if(!inBounds(x, y)) return false;
+        if(!inBounds(x, y)) return false; // batas map
 
+        // Kalo masih false dia collision, true bisa lewat
         if(map[y][x] == WALL || (map[y][x] == BOX && !kotakLengkap) || (map[y][x] == AIR && !airDingin) || visited[y][x]){
             return false;
         }
 
+        // blokir kalo belum dapet kunci
         if(x == POSISI_PINTU_AIR_PANAS.x && y == POSISI_PINTU_AIR_PANAS.y){
             if(!pintuAirPanas){
                 return false;
@@ -95,6 +97,7 @@ public class GameData {
         return true;
     }
 
+    // reset jalur atau memori sebelum mencari jalur baru
     public static void resetVisited() {
         visited = new boolean[ROWS][COLS];
     }
@@ -155,6 +158,7 @@ public class GameData {
         }
     }
     
+    // kordinat kotak dan mengubah angka 1 jadi 4
     public static void kotak(){
         daftarKotak.clear();
         if(levelMap == 1){
@@ -175,7 +179,8 @@ public class GameData {
         }
     }
 
-    public static void Air(){ //tempat air panas
+    // kordinat air dan mengubah angka 1 jadi 5
+    public static void Air(){ 
         daftarAir.clear();
         if(levelMap == 1){
             daftarAir.add(new Point(3, 15));
@@ -256,6 +261,7 @@ public class GameData {
         }
     }
 
+    // Mengecek huruf yang didapatkan
     public static void cekStatusHuruf(){
         int countK = 0, countO = 0, countT = 0, countA = 0, countU = 0, countN = 0, countC = 0, countI = 0, countR = 0, countE = 0, countX = 0;;
 
@@ -298,6 +304,7 @@ public class GameData {
         }
     }
 
+    // Gambar Kunci
     public static void drawItems(Graphics g) {
         int offsetX = 4;
         int offsetY = 4;
@@ -312,6 +319,7 @@ public class GameData {
         }
     }
 
+    // Gambar huruf
     public static void drawHuruf(Graphics g){
         int offsetX = 8;
         int offsetY = 8;
@@ -367,6 +375,7 @@ public class GameData {
         g.drawImage(Assets.animasiPlayer[indexAnimasiPlayer],playerX * TILE_SIZE,playerY * TILE_SIZE,TILE_SIZE,TILE_SIZE,null);
     }
 
+    // Reset semua buat pindah ke map 2
     public static void loadingMap(int[][] map1) {
         map = map1;
         ROWS = map.length;

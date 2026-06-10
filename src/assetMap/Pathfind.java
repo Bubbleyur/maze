@@ -14,20 +14,21 @@ public class Pathfind {
         GameData.pintuAirPanas = false;
         GameData.airDingin = false;
         GameData.kotakLengkap = false;
+        GameData.exitLengkap = false;
 
         // backtracking pencarian huruf
         for (Huruf h : GameData.huruf) {
             if(h.kata.equalsIgnoreCase("Kunci") || h.kata.equalsIgnoreCase("Pintu") || h.kata.equalsIgnoreCase("Kotak")){
                 continue;
             }
-            GameData.resetVisited();
-            ruteSementara.clear();
+            GameData.resetVisited(); // Menghapus jejak pencarian sebelumnya
+            ruteSementara.clear(); // Mengkosongkan rute sementara
             solve(korSekarangX, korSekarangY, h.posisiX, h.posisiY);
-            // buat gak ada duplikat di arraynya
+            // hapus elemen 0 buat gak duplikat kordinat di arraynya
             if(!rute.isEmpty() && !ruteSementara.isEmpty()){
                 ruteSementara.remove(0);
             }
-            rute.addAll(ruteSementara);
+            rute.addAll(ruteSementara); // simpan rute sementara ke rute utama
             korSekarangX = h.posisiX;
             korSekarangY = h.posisiY;
         }
@@ -77,6 +78,7 @@ public class Pathfind {
         return true;
     }
 
+    // Bactracking
     public static boolean solve(int awalX, int awalY, int targetX, int targetY){
         // Basecase
         if(awalX == targetX && awalY == targetY){
